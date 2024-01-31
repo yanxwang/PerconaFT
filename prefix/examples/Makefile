@@ -1,0 +1,58 @@
+# SRCS = $(wildcard *.c)
+# TARGETS = $(patsubst %.c,%,$(SRCS)) 
+# CPPFLAGS = -I../include -D_GNU_SOURCE
+# CFLAGS = -g -std=c99 -Wall -Wextra -Werror -Wno-missing-field-initializers
+# ifeq ($(USE_STATIC_LIBS),1)
+# LIBTOKUDB = tokufractaltree_static
+# LIBTOKUPORTABILITY = tokuportability_static
+# else
+# LIBTOKUDB = tokufractaltree
+# LIBTOKUPORTABILITY = tokuportability
+# endif
+# LDFLAGS = -L../lib -l$(LIBTOKUDB) -l$(LIBTOKUPORTABILITY) -Wl,-rpath,../lib -lpthread -lz -ldl
+
+# default local: $(TARGETS)
+
+# %: %.c
+# 	$(CC) -DTOKUDB $(CPPFLAGS) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+# %-bdb: %.c
+# 	$(CC) -D_GNU_SOURCE -DBDB $(CFLAGS) $^ -o $@ -ldb
+
+# check: $(TARGETS)
+# 	./db-insert -x && ./db-scan --lwc --prelock --prelockflag
+
+# checknox: $(TARGETS)
+# 	./db-insert && ./db-scan --nox --lwc --prelock --prelockflag
+
+# clean:
+# 	rm -rf $(TARGETS) bench.* update.env.* insertm.env.*
+SRCS = $(wildcard *.cpp)
+TARGETS = $(patsubst %.cpp,%,$(SRCS))
+CPPFLAGS = -I../include -D_GNU_SOURCE
+CFLAGS = -g -std=c++11 -Wall -Wextra -Wno-missing-field-initializers
+ifeq ($(USE_STATIC_LIBS),1)
+LIBTOKUDB = tokufractaltree_static
+LIBTOKUPORTABILITY = tokuportability_static
+else
+LIBTOKUDB = tokufractaltree
+LIBTOKUPORTABILITY = tokuportability
+endif
+LDFLAGS = -L../lib -l$(LIBTOKUDB) -l$(LIBTOKUPORTABILITY) -Wl,-rpath,../lib -lpthread -lz -ldl
+ 
+default local: $(TARGETS)
+ 
+%: %.cpp
+	$(CXX) -DTOKUDB $(CPPFLAGS) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+ 
+%-bdb: %.c
+	$(CC) -D_GNU_SOURCE -DBDB $(CFLAGS) $^ -o $@ -ldb
+ 
+check: $(TARGETS)
+	./db-insert -x && ./db-scan --lwc --prelock --prelockflag
+ 
+checknox: $(TARGETS)
+	./db-insert && ./db-scan --nox --lwc --prelock --prelockflag
+ 
+clean:
+	rm -rf $(TARGETS) bench.* update.env.* insertm.env.*
