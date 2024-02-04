@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 TokuFT
 ======
 
@@ -125,3 +126,6 @@ TokuFT is available under the GPL version 2, with slight modifications.
 See [README-TOKUDB][license].
 
 [license]: http://github.com/Tokutek/ft-index/blob/master/README-TOKUDB
+=======
+# PerconaFT
+>>>>>>> origin/main
